@@ -1,0 +1,26 @@
+{
+    "name": "rabble/snippet-bundle",
+    "type": "symfony-bundle",
+    "description": "Snippets are small pieces of content that can be loaded and used anywhere on the website.",
+    "keywords": ["rabble", "admin", "snippet", "cms"],
+    "homepage": "https://rabble.rocks",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rachel Snijders",
+            "email": "rainbowvision.bn@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "rabble/content-bundle": "*"
+    },
+    "autoload": {
+        "psr-4": { "Rabble\\SnippetBundle\\": "src/SnippetBundle" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

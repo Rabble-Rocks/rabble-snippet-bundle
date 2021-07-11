@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="rabble_snippet.twig.extension.class">Rabble\SnippetBundle\Twig\RabbleSnippetExtension</parameter>
+    </parameters>
+    <services>
+        <service id="rabble_snippet.twig.extension" class="%rabble_snippet.twig.extension.class%">
+            <argument type="service" id="rabble_snippet.snippet_type_manager"/>
+            <argument type="service" id="rabble_snippet.persistence.snippet_manager"/>
+            <argument type="service" id="rabble_snippet.persistence.default_snippets_manager"/>
+            <argument type="service" id="rabble_content.content.structure_builder"/>
+            <argument type="service" id="elasticsearch_index.collection.snippet"/>
+            <argument type="service" id="request_stack"/>
+            <argument>%kernel.default_locale%</argument>
+            <tag name="twig.extension"/>
+        </service>
+    </services>
+
+</container>

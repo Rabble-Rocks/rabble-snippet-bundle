@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="rabble_snippet.persistence.snippet_manager.class">Rabble\ContentBundle\Persistence\Manager\ContentManager</parameter>
+        <parameter key="rabble_snippet.persistence.path_provider.class">Rabble\SnippetBundle\Persistence\SnippetPathProvider</parameter>
+        <parameter key="rabble_snippet.persistence.hydrator.class">Rabble\ContentBundle\Persistence\Hydrator\ContentDocumentHydrator</parameter>
+    </parameters>
+    <services>
+        <service id="rabble_snippet.indexer" class="Rabble\SnippetBundle\Indexer\SnippetIndexer">
+            <argument>Rabble\SnippetBundle\Document\Snippet</argument>
+            <argument type="service" id="elasticsearch_index.collection.snippet"/>
+            <argument type="service" id="rabble_content.content.structure_builder"/>
+            <argument type="service" id="rabble_snippet.persistence.snippet_manager"/>
+            <tag name="rabble_content.indexer"/>
+        </service>
+    </services>
+</container>

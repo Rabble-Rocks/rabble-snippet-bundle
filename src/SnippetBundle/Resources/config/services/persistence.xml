@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="rabble_snippet.persistence.snippet_manager.class">Rabble\ContentBundle\Persistence\Manager\ContentManager</parameter>
+        <parameter key="rabble_snippet.persistence.path_provider.class">Rabble\SnippetBundle\Persistence\SnippetPathProvider</parameter>
+        <parameter key="rabble_snippet.persistence.path_provider.default_snippets.class">Rabble\SnippetBundle\Persistence\DefaultSnippetsPathProvider</parameter>
+        <parameter key="rabble_snippet.persistence.hydrator.default_snippets.class">Rabble\SnippetBundle\Persistence\DefaultSnippetsHydrator</parameter>
+    </parameters>
+    <services>
+        <service id="rabble_snippet.persistence.snippet_manager" class="%rabble_snippet.persistence.snippet_manager.class%">
+            <argument type="service" id="doctrine_phpcr.session"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="rabble_snippet.persistence.path_provider"/>
+            <argument type="service" id="rabble_snippet.persistence.hydrator"/>
+            <argument>%kernel.default_locale%</argument>
+        </service>
+        <service id="rabble_snippet.persistence.default_snippets_manager" class="%rabble_snippet.persistence.snippet_manager.class%">
+            <argument type="service" id="doctrine_phpcr.session"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="rabble_snippet.persistence.path_provider.default_snippets"/>
+            <argument type="service" id="rabble_snippet.persistence.hydrator.default_snippets"/>
+            <argument>%kernel.default_locale%</argument>
+        </service>
+        <service id="rabble_snippet.persistence.hydrator" alias="rabble_content.persistence.hydrator.content_document" />
+        <service id="rabble_snippet.persistence.hydrator.default_snippets" class="%rabble_snippet.persistence.hydrator.default_snippets.class%">
+            <argument type="service" id="doctrine_phpcr.session"/>
+            <argument type="service" id="rabble_content.content.transformer_chain"/>
+            <argument type="service" id="rabble_content.persistence.hydrator.reflection"/>
+        </service>
+        <service id="rabble_snippet.persistence.path_provider" class="%rabble_snippet.persistence.path_provider.class%">
+            <argument type="service" id="rabble_content.persistence.node_name_provider"/>
+            <argument type="service" id="slugger"/>
+            <argument type="service" id="doctrine_phpcr.session"/>
+        </service>
+        <service id="rabble_snippet.persistence.path_provider.default_snippets" class="%rabble_snippet.persistence.path_provider.default_snippets.class%" />
+    </services>
+
+</container>

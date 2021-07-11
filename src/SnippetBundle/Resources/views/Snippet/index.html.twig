@@ -1,0 +1,40 @@
+{% extends '@RabbleAdmin/Layout/base.html.twig' %}
+{% trans_default_domain 'RabbleSnippetBundle' %}
+{% block title %}{{ 'menu.snippet.index'|trans }}{% endblock %}
+{% block page_content %}
+    <div class="row">
+        <div class="col-12 mB-20">
+            {% include '@RabbleAdmin/flash_messages.html.twig' with {mb: 3} only %}
+            <div class="dropdown">
+                <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
+                    <i class="fa fa-plus-circle"></i>
+                    {{ 'snippet.create'|trans }}
+                </button>
+                <div class="dropdown-menu">
+                    {% for type in snippet_types %}
+                        {%- if type.hasAttribute('label_' ~ app.request.locale) -%}
+                            {%- set label = type.getAttribute('label_' ~ app.request.locale) -%}
+                        {%- elseif type.hasAttribute('translation_domain') -%}
+                            {%- set label = ('snippet_type.' ~ type.name)|trans([], type.getAttribute('translation_domain')) -%}
+                        {%- else -%}
+                            {%- set label = type.name -%}
+                        {%- endif -%}
+                        <a class="dropdown-item" href="{{ path('rabble_admin_snippet_create', {snippetType: type.name}) }}">{{ label }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="bgc-white bd bdrs-3 p-20 mB-20 w-100p">
+                {{ datatable('snippet') }}
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="bgc-white bd bdrs-3 p-20 mB-20 w-100p">
+                {{ render(controller('rabble_snippet.controller.default_snippets::indexAction', {request: app.request})) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing
+        http://symfony.com/schema/routing/routing-1.0.xsd">
+    <route id="rabble_admin_snippet_index" controller="rabble_snippet.controller.snippet::indexAction" path="/{%rabble_admin.content_locale_key%}/snippet/index"/>
+    <route id="rabble_admin_snippet_create" controller="rabble_snippet.controller.snippet::createAction" path="/{%rabble_admin.content_locale_key%}/snippet/create/{snippetType}"/>
+    <route id="rabble_admin_snippet_edit" controller="rabble_snippet.controller.snippet::editAction" path="/{%rabble_admin.content_locale_key%}/snippet/edit/{snippet}"/>
+    <route id="rabble_admin_snippet_delete" controller="rabble_snippet.controller.snippet::deleteAction" path="/{%rabble_admin.content_locale_key%}/snippet/delete/{snippet}"/>
+</routes>
