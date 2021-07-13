@@ -5,7 +5,7 @@
     <services>
         <service id="Rabble\SnippetBundle\Command\SnippetIndexCommand">
             <argument type="service" id="doctrine_phpcr.session"/>
-            <argument type="service" id="rabble_snippet.persistence.snippet_manager"/>
+            <argument type="service" id="rabble_content.persistence.content_manager"/>
             <argument type="service" id="rabble_snippet.indexer"/>
             <argument>%kernel.default_locale%</argument>
             <tag name="console.command"/>

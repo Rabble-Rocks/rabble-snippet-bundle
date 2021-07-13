@@ -7,7 +7,6 @@ use Jackalope\Session;
 use PHPCR\RepositoryException;
 use Rabble\ContentBundle\Persistence\Manager\ContentManager;
 use Rabble\SnippetBundle\Document\Snippet;
-use Rabble\SnippetBundle\Persistence\SnippetPathProvider;
 use Rabble\SnippetBundle\SnippetType\Manager\SnippetTypeManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -43,7 +42,7 @@ class DefaultSnippetsType extends AbstractType
         $groupedSnippets = [];
 
         try {
-            $snippetsNode = $this->session->getNode(SnippetPathProvider::ROOT_NODE);
+            $snippetsNode = $this->session->getNode(Snippet::ROOT_NODE);
             /** @var Node $snippetNode */
             foreach ($snippetsNode->getNodes() as $snippetNode) {
                 $snippet = $this->snippetManager->find($snippetNode->getPath());

@@ -12,6 +12,8 @@ use Rabble\ContentBundle\Persistence\Document\AbstractPersistenceDocument;
  */
 class Snippet extends AbstractPersistenceDocument
 {
+    public const ROOT_NODE = '/snippet';
+
     /**
      * @NodeProperty("jcr:uuid")
      * @ES\Id

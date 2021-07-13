@@ -8,7 +8,7 @@
     <services>
         <service id="rabble_snippet.form.default_snippets" class="%rabble_snippet.form.default_snippets.class%">
             <argument type="service" id="doctrine_phpcr.session"/>
-            <argument type="service" id="rabble_snippet.persistence.snippet_manager"/>
+            <argument type="service" id="rabble_content.persistence.content_manager"/>
             <argument type="service" id="rabble_snippet.snippet_type_manager"/>
             <argument type="service" id="translator.default"/>
             <argument>%kernel.default_locale%</argument>
