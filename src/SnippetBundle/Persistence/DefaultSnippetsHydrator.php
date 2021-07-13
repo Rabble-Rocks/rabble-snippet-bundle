@@ -14,16 +14,13 @@ use Rabble\SnippetBundle\Document\DefaultSnippets;
 class DefaultSnippetsHydrator implements DocumentHydratorInterface
 {
     private Session $session;
-    private ContentTransformerInterface $contentTransformer;
     private ReflectionHydrator $baseHydrator;
 
     public function __construct(
         Session $session,
-        ContentTransformerInterface $contentTransformer,
         ReflectionHydrator $baseHydrator
     ) {
         $this->session = $session;
-        $this->contentTransformer = $contentTransformer;
         $this->baseHydrator = $baseHydrator;
     }
 
@@ -34,9 +31,15 @@ class DefaultSnippetsHydrator implements DocumentHydratorInterface
             throw new InvalidContentDocumentException();
         }
         $this->baseHydrator->hydrateDocument($document, $node);
-        $data = $this->contentTransformer->getData($node);
-        if (isset($data['defaults'])) {
-            $document->setDefaults($data['defaults']);
+        if ($node->hasNode('defaults')) {
+            $defaultsNode = $node->getNode('defaults');
+            $defaults = [];
+            foreach ($defaultsNode->getPropertiesValues() as $key => $value) {
+                if (false === strpos($key, 'jcr:')) {
+                    $defaults[$key] = $value;
+                }
+            }
+            $document->setDefaults($defaults);
         }
     }
 
@@ -46,9 +49,9 @@ class DefaultSnippetsHydrator implements DocumentHydratorInterface
             throw new InvalidContentDocumentException();
         }
         $this->baseHydrator->hydrateNode($document, $node);
-        $data = [
-            'defaults' => $document->getDefaults(),
-        ];
-        $this->contentTransformer->setData($node, $data);
+        $defaultsNode = $node->hasNode('defaults') ? $node->getNode('defaults') : $node->addNode('defaults');
+        foreach ($document->getDefaults() as $key => $value) {
+            $defaultsNode->setProperty($key, $value);
+        }
     }
 }

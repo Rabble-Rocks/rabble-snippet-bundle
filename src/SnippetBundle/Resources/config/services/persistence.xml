@@ -26,7 +26,6 @@
         <service id="rabble_snippet.persistence.hydrator" alias="rabble_content.persistence.hydrator.content_document" />
         <service id="rabble_snippet.persistence.hydrator.default_snippets" class="%rabble_snippet.persistence.hydrator.default_snippets.class%">
             <argument type="service" id="doctrine_phpcr.session"/>
-            <argument type="service" id="rabble_content.content.transformer_chain"/>
             <argument type="service" id="rabble_content.persistence.hydrator.reflection"/>
         </service>
         <service id="rabble_snippet.persistence.path_provider" class="%rabble_snippet.persistence.path_provider.class%">
