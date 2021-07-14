@@ -7,9 +7,7 @@
     </parameters>
     <services>
         <service id="rabble_snippet.twig.extension" class="%rabble_snippet.twig.extension.class%">
-            <argument type="service" id="rabble_snippet.snippet_type_manager"/>
             <argument type="service" id="rabble_content.persistence.content_manager"/>
-            <argument type="service" id="rabble_snippet.persistence.default_snippets_manager"/>
             <argument type="service" id="rabble_content.content.structure_builder"/>
             <argument type="service" id="elasticsearch_index.collection.snippet"/>
             <argument type="service" id="request_stack"/>

@@ -6,13 +6,19 @@ use Rabble\ContentBundle\Persistence\Document\AbstractPersistenceDocument;
 
 class DefaultSnippets extends AbstractPersistenceDocument
 {
-    public const DEFAULT_NODE_NAME = 'default_snippets';
+    public const ROOT_NODE = '/default-snippets';
+    public const DEFAULT_NODE_NAME = 'default-snippets';
 
     protected array $defaults = [];
 
     public function __construct()
     {
         $this->nodeName = self::DEFAULT_NODE_NAME;
+    }
+
+    public static function getOwnProperties(): array
+    {
+        return ['defaults'];
     }
 
     public function getDefaults(): array

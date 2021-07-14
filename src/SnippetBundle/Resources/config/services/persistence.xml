@@ -3,21 +3,11 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
-        <parameter key="rabble_snippet.persistence.path_provider.default_snippets.class">Rabble\SnippetBundle\Persistence\DefaultSnippetsPathProvider</parameter>
         <parameter key="rabble_snippet.persistence.hydrator.default_snippets.class">Rabble\SnippetBundle\Persistence\DefaultSnippetsHydrator</parameter>
     </parameters>
     <services>
-        <service id="rabble_snippet.persistence.default_snippets_manager" class="Rabble\ContentBundle\Persistence\Manager\ContentManager">
-            <argument type="service" id="doctrine_phpcr.session"/>
-            <argument type="service" id="event_dispatcher"/>
-            <argument type="service" id="rabble_snippet.persistence.path_provider.default_snippets"/>
-            <argument type="service" id="rabble_content.document_hydrator"/>
-            <argument>%kernel.default_locale%</argument>
-        </service>
         <service id="rabble_snippet.persistence.hydrator.default_snippets" class="%rabble_snippet.persistence.hydrator.default_snippets.class%">
             <tag name="rabble_content.document_hydrator" />
         </service>
-        <service id="rabble_snippet.persistence.path_provider.default_snippets" class="%rabble_snippet.persistence.path_provider.default_snippets.class%" />
     </services>
-
 </container>

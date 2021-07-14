@@ -14,7 +14,7 @@
         </service>
         <service id="rabble_snippet.controller.default_snippets" class="%rabble_snippet.controller.default_snippets.class%" autowire="true">
             <argument type="service" id="rabble_snippet.snippet_type_manager"/>
-            <argument type="service" id="rabble_snippet.persistence.default_snippets_manager"/>
+            <argument type="service" id="rabble_content.persistence.content_manager"/>
             <tag name="controller.service_arguments"/>
         </service>
     </services>

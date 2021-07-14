@@ -23,7 +23,7 @@ class Snippet extends AbstractPersistenceDocument
     /**
      * @ES\Property
      */
-    protected array $properties;
+    protected array $properties = [];
 
     /**
      * @NodeName()

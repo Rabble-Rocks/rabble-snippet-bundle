@@ -2,10 +2,10 @@
 
 namespace Rabble\SnippetBundle\Controller;
 
+use Rabble\AdminBundle\EventListener\RouterContextSubscriber;
 use Rabble\ContentBundle\Persistence\Manager\ContentManager;
 use Rabble\SnippetBundle\Document\DefaultSnippets;
 use Rabble\SnippetBundle\Form\DefaultSnippetsType;
-use Rabble\SnippetBundle\Persistence\DefaultSnippetsPathProvider;
 use Rabble\SnippetBundle\SnippetType\Manager\SnippetTypeManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +26,8 @@ class DefaultSnippetsController extends AbstractController
 
     public function indexAction(Request $request): Response
     {
-        $document = $this->contentManager->find(sprintf('%s/%s', DefaultSnippetsPathProvider::ROOT_NODE, DefaultSnippets::DEFAULT_NODE_NAME));
+        $this->contentManager->setLocale($request->attributes->get(RouterContextSubscriber::CONTENT_LOCALE_KEY));
+        $document = $this->contentManager->find(sprintf('%s/%s', DefaultSnippets::ROOT_NODE, DefaultSnippets::DEFAULT_NODE_NAME));
         if (null === $document) {
             $document = new DefaultSnippets();
         }

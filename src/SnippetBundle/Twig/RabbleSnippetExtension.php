@@ -9,34 +9,26 @@ use Rabble\ContentBundle\Content\Structure\StructureBuilder;
 use Rabble\ContentBundle\Persistence\Manager\ContentManager;
 use Rabble\SnippetBundle\Document\DefaultSnippets;
 use Rabble\SnippetBundle\Document\Snippet;
-use Rabble\SnippetBundle\Persistence\DefaultSnippetsPathProvider;
-use Rabble\SnippetBundle\SnippetType\Manager\SnippetTypeManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class RabbleSnippetExtension extends AbstractExtension
 {
-    private SnippetTypeManagerInterface $snippetTypeManager;
     private ContentManager $snippetManager;
-    private ContentManager $snippetDefaultsManager;
     private StructureBuilder $structureBuilder;
     private ArrayCollection $indexes;
     private RequestStack $requestStack;
     private string $defaultLocale;
 
     public function __construct(
-        SnippetTypeManagerInterface $snippetTypeManager,
         ContentManager $snippetManager,
-        ContentManager $snippetDefaultsManager,
         StructureBuilder $structureBuilder,
         ArrayCollection $indexes,
         RequestStack $requestStack,
         string $defaultLocale
     ) {
-        $this->snippetTypeManager = $snippetTypeManager;
         $this->snippetManager = $snippetManager;
-        $this->snippetDefaultsManager = $snippetDefaultsManager;
         $this->structureBuilder = $structureBuilder;
         $this->indexes = $indexes;
         $this->requestStack = $requestStack;
@@ -74,7 +66,7 @@ class RabbleSnippetExtension extends AbstractExtension
     {
         $locale = $locale ?? $this->getLocale();
         $this->snippetManager->setLocale($locale);
-        $document = $this->snippetDefaultsManager->find(sprintf('%s/%s', DefaultSnippetsPathProvider::ROOT_NODE, DefaultSnippets::DEFAULT_NODE_NAME));
+        $document = $this->snippetManager->find(sprintf('%s/%s', DefaultSnippets::ROOT_NODE, DefaultSnippets::DEFAULT_NODE_NAME));
         if (!$document instanceof DefaultSnippets || !array_key_exists($snippetType, $document->getDefaults())) {
             return null;
         }

@@ -17,7 +17,7 @@ class SnippetDatatable extends AbstractGenericDatatable
 {
     private RequestStack $requestStack;
     private RouterInterface $router;
-    /** @var ArrayCollection<ElasticsearchDataFetcher> */
+    /** @var ElasticsearchDataFetcher[] */
     private array $dataFetchers;
 
     public function __construct(
@@ -68,5 +68,16 @@ class SnippetDatatable extends AbstractGenericDatatable
                 'expression' => 'data["snippetType"]',
             ]),
         ];
+    }
+
+    public function render(): string
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        $this->setOptions(['ajax' => $this->router->generate('rabble_datatable_table_localized', [
+            'datatable' => $this->getName(),
+            RouterContextSubscriber::CONTENT_LOCALE_KEY => $request->attributes->get(RouterContextSubscriber::CONTENT_LOCALE_KEY),
+        ])]);
+
+        return parent::render();
     }
 }
