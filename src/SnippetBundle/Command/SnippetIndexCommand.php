@@ -5,8 +5,8 @@ namespace Rabble\SnippetBundle\Command;
 use Jackalope\Node;
 use Jackalope\Session;
 use Rabble\ContentBundle\Persistence\Manager\ContentManager;
+use Rabble\SnippetBundle\Document\Snippet;
 use Rabble\SnippetBundle\Indexer\SnippetIndexer;
-use Rabble\SnippetBundle\Persistence\SnippetPathProvider;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -48,7 +48,7 @@ class SnippetIndexCommand extends Command
         if ($input->getOption('full-reset')) {
             $this->snippetIndexer->reset();
         }
-        $node = $this->session->getNode(SnippetPathProvider::ROOT_NODE);
+        $node = $this->session->getNode(Snippet::ROOT_NODE);
         /** @var Node $snippet */
         foreach ($node->getNodes() as $snippet) {
             $this->snippetIndexer->index($this->contentManager->find($snippet->getPath()));
